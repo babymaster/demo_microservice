@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: "Demo Metric"
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, prometheus
+  endpoint:
+    loggers:
+      enabled: false
+  tracing:
+    sampling:
+      probability: 1.0
+  metrics:
+    tags:
+      application: springboot-3
+    distribution:
+      percentiles-histogram:
+        http:
+          server:
+            requests: true
+logging:
+  pattern:
+    level: "[${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+  level:
+    com:
+      tdn: debug
